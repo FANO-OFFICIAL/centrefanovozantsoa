@@ -1,0 +1,166 @@
+Étapes pour créer le projet Centre Fanovozantsoa à la racine
+1. Créer le projet avec Astro Starter (gratuit)
+
+Dans ton terminal, à la racine de ton dossier de travail :
+
+npx create astro@latest .
+→ Choisis :
+
+Template : Minimal (recommended)
+
+TypeScript : No (pour simplifier)
+
+Git : Yes (si tu veux versionner)
+
+Install dependencies : Yes
+
+Ton projet Astro est maintenant installé à la racine (pas dans un sous-dossier).
+
+2. Ajouter Tailwind CSS (pour responsive et style rapide)
+
+Toujours à la racine :
+
+npx astro add tailwind
+
+→ L’outil configure automatiquement Tailwind + PostCSS.
+Tu auras les fichiers : tailwind.config.cjs et postcss.config.cjs.
+
+3. Organisation du projet
+
+Arborescence attendue après config :
+
+package.json
+
+astro.config.mjs
+
+tailwind.config.cjs
+
+postcss.config.cjs
+
+src/
+
+pages/
+
+index.astro
+
+a-propos.astro
+
+programmes.astro
+
+actualites.astro
+
+donner.astro
+
+contact.astro
+
+components/
+
+Header.astro
+
+Footer.astro
+
+Hero.astro
+
+ProgramCard.astro
+
+Testimonial.astro
+
+layouts/
+
+Layout.astro
+
+styles/
+
+global.css
+
+public/
+
+assets/
+
+logofanovo.jpg (ton logo)
+
+4. Contenu des fichiers
+Header.astro
+
+Logo à gauche (logofanovo.jpg)
+
+Texte : Centre Fanovozantsoa + sous-texte Ensemble aidons les enfants des rues
+
+Menu horizontal (desktop) avec :
+
+Accueil
+
+À propos
+
+Programmes
+
+Actualités
+
+Faire un don (bouton accentué)
+
+Contact
+
+Sur mobile : bouton ☰ qui affiche un menu vertical.
+
+Footer.astro
+
+Trois colonnes :
+
+Logo + description courte
+
+Liens rapides : À propos, Programmes, Faire un don
+
+Coordonnées + réseaux sociaux
+
+Bas du footer : copyright.
+
+Layout.astro
+
+Structure HTML de base : header, slot pour contenu, footer.
+Inclure global.css et Tailwind classes.
+
+5. Pages à créer
+index.astro
+
+Hero (titre + CTA “Faire un don” et “En savoir plus”)
+
+Bloc Programmes (3 ProgramCard)
+
+Bloc Témoignages (2 Testimonial)
+
+Galerie photos (3–6 images Unsplash)
+
+a-propos.astro
+
+Texte long (800–1000 mots) : historique, mission, équipe, valeurs.
+
+programmes.astro
+
+Trois sections (Éducation, Santé, Insertion) avec texte détaillé + images.
+
+actualites.astro
+
+Liste d’articles avec titre, extrait, lien “Lire plus”.
+
+donner.astro
+
+Texte explicatif sur les dons (ponctuel, mensuel, parrainage) + bouton “Faire un don maintenant”.
+
+contact.astro
+
+Formulaire : Nom, Email, Message + coordonnées de l’association.
+
+6. Responsive
+
+Utiliser Tailwind (classes grid-cols-1 md:grid-cols-3, object-cover, rounded, etc.)
+
+Menu burger en mobile
+
+Images adaptatives (w-full h-[300px] object-cover).
+
+7. Démarrer le projet
+
+npm install
+npm run dev
+
+→ Ouvrir http://localhost:4321
