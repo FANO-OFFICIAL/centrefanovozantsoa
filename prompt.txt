@@ -1,0 +1,95 @@
+L'objectif est de créer un site web pour le Centre Fanovozantsoa, une association qui aide les enfants des rues à Madagascar. Le site doit avoir la même structure que les sites d'associations humanitaires similaires, en s'appuyant sur les technologies Astro et Tailwind CSS.
+
+Prompt complet et détaillé pour votre agent AI
+
+Instruction Générale :
+
+Tu es un expert en développement web spécialisé dans la création de sites d'associations humanitaires avec Astro et Tailwind CSS. Ton rôle est de concevoir un site web complet pour le Centre Fanovozantsoa. Tu dois utiliser les informations fournies dans les fichiers data_centrefanovozantsoa.txt et logofanovo.jpg pour le contenu et le design.
+
+Partie 1 : Configuration et Technologies
+
+    Framework et intégrations :
+
+        Le site sera construit avec Astro.
+
+        L'intégration Tailwind CSS doit être utilisée pour le stylisme.
+
+        Le site doit être optimisé pour un chargement rapide et une bonne performance.
+
+    Structure du projet :
+
+        Crée un projet Astro en utilisant le modèle standard.
+
+        Utilise l'intégration @astrojs/tailwind pour l'intégration de Tailwind.
+
+        Organise les fichiers de manière modulaire (ex : src/components, src/layouts, src/pages).
+
+Partie 2 : Design et Contenu
+
+    Identité visuelle (d'après le logo) :
+
+        Palette de couleurs : Utilise les couleurs vives du logo (jaune, orange, rouge, violet, bleu, vert) pour les éléments clés du site (boutons, titres, icônes).
+
+        Slogan : Le slogan "Ensemble aidons les enfants des rues" doit être le message principal de la page d'accueil.
+
+        Logo : Le logo du Centre Fanovozantsoa sera utilisé dans l'en-tête (header) du site.
+
+    Structure des pages :
+
+        Page d'Accueil (index.astro) :
+
+            Une section "Hero" avec une image ou une vidéo d'enfants souriants et le slogan.
+
+            Deux boutons d'appel à l'action clairs : "Faire un don" et "Parrainer un enfant".
+
+            Une section "Notre Mission" expliquant que le Centre Fanovozantsoa est une association qui aide les enfants des rues de Madagascar. Le centre a été créé par l'association Prométhée Humanitaire en février 2007.
+
+Une section "Faits marquants" ou "Nos réussites" affichant des chiffres clés : 
+
+"25 enfants aidés", "De 2 à 20 ans", et que tous les enfants ont réussi scolairement. Ajoute que trois d'entre eux ont rejoint l'université.
+
+Page "À propos" (about.astro) :
+
+    Notre histoire : Raconte l'histoire du centre fondé en 2007 par Prométhée Humanitaire. Mentionne l'association Micadascar qui soutient principalement l'orphelinat Fanovozantsoa depuis 2018.
+
+Notre équipe : Présente le personnel : un directeur, une directrice administrative, 4 éducateurs, une ménagère et une cuisinière.
+
+Coordonnées : Affiche l'adresse ("villa Harifetra" lot 0107F, Majunga, Madagascar) et le numéro de téléphone (034 08 586 44).
+
+Page "Nos actions" (actions.astro) :
+
+    Éducation : Expliquez que le centre fournit une scolarisation régulière et du soutien scolaire.
+
+Hébergement et protection : Dites que le centre est un lieu sûr et accueillant pour les enfants abandonnés. Le centre est un orphelinat.
+
+Bien-être : Mentionnez la fourniture de nourriture et de matériel.
+
+Page "Nous soutenir" (soutenir.astro) :
+
+    Faire un don : Créez une section pour les dons. Indiquez que les efforts de l'association sont payants, mais qu'ils ont besoin de dons.
+
+Parrainage : Offrez la possibilité de parrainer.
+
+Bénévolat : Mentionnez la possibilité de devenir bénévole, inspiré par l'histoire de Gérard, un bénévole incontournable de l'orphelinat.
+
+    Mise en page réutilisable (BaseLayout.astro) :
+
+        Crée un layout de base avec un en-tête (header) et un pied de page (footer) pour toutes les pages.
+
+        L'en-tête doit inclure le logo et le menu de navigation principal (Accueil, À propos, Nos actions, Nous soutenir, Contact).
+
+        Le pied de page doit contenir les informations de contact, les liens vers les réseaux sociaux et les mentions légales.
+
+Partie 3 : Tâches à exécuter
+
+    Initialise le projet Astro et installe les intégrations nécessaires (@astrojs/tailwind).
+
+    Crée les layouts et les composants réutilisables.
+
+    Développe chaque page en utilisant la structure et le contenu détaillés ci-dessus.
+
+    Utilise des classes Tailwind pour le style de chaque élément.
+
+    Optimise les images pour le web.
+
+Ton objectif final est de fournir un code source propre, commenté et prêt à être déployé, qui respecte la vision et la mission du Centre Fanovozantsoa.

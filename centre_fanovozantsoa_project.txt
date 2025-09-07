@@ -1,0 +1,609 @@
+# Projet: Centre Fanovozantsoa (Astro + Tailwind)
+
+Ce document contient l'arborescence et tous les fichiers principaux du projet Astro + Tailwind configuré pour Roo Code. Copie/colle les fichiers dans ton projet ou ouvre ce document dans l'éditeur pour exporter les fichiers.
+
+---
+
+## Arborescence (extrait)
+
+```
+centre-fanovozantsoa/
+├─ package.json
+├─ astro.config.mjs
+├─ tailwind.config.cjs
+├─ postcss.config.cjs
+├─ src/
+│  ├─ layouts/
+│  │  └─ PageLayout.astro
+│  ├─ components/
+│  │  └─ widgets/
+│  │     ├─ Hero.astro
+│  │     ├─ Features.astro
+│  │     ├─ Stats.astro
+│  │     └─ CallToAction.astro
+│  ├─ pages/
+│  │  ├─ index.astro
+│  │  ├─ about.astro
+│  │  ├─ contact.astro
+│  │  ├─ don.astro
+│  │  ├─ login.astro
+│  │  └─ dashboard.astro
+│  └─ assets/
+│     └─ images.txt (liste d'images externes utilisées)
+├─ .github/
+│  └─ workflows/deploy.yml
+├─ vercel.json
+└─ README.md
+```
+
+---
+
+## package.json
+
+```json
+{
+  "name": "centre-fanovozantsoa",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format": "prettier --write \"**/*.{ts,js,astro,css,md}\""
+  },
+  "dependencies": {
+    "astro": "^4.0.0",
+    "@astrojs/tailwind": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "clsx": "^2.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.0"
+  }
+}
+```
+
+---
+
+## astro.config.mjs
+
+```js
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+
+export default defineConfig({
+  site: 'https://example.com',
+  integrations: [tailwind()],
+});
+```
+
+---
+
+## tailwind.config.cjs
+
+```js
+module.exports = {
+  content: ['./src/**/*.{astro,html,js,jsx,ts,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: '#155e75',
+        accent: '#f97316'
+      }
+    }
+  },
+  plugins: []
+};
+```
+
+---
+
+## postcss.config.cjs
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {}
+  }
+};
+```
+
+---
+
+## src/assets/images.txt
+
+Fichier non exécutable listant les images externes à utiliser partout dans le site (logo + illustrations Unsplash). Tu peux laisser les URLs externes :
+
+```
+logo: https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/307863850_462160455950552_236630648993226268_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=PGItqvY_k44Q7kNvwHXALmA&_nc_oc=Adk3-3Z4be-JYKE7TSirSL0nbcJZQE3_GAQeQiNd5tadvBusvXdL6jyPj9EWo2vRc-s&_nc_zt=24&_nc_ht=scontent-jnb2-1.xx&_nc_gid=5n-lUaRiazTHkTLMazds_w&oh=00_AfZolRRxBqZPAoBb3MmNv_D9uVkuMydsVjvCH0-9dVaGLg&oe=68C1A665
+hero1: https://images.unsplash.com/photo-1608889175123-8af42c1eaf6b?auto=format&fit=crop&w=2000&q=80
+hero2: https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=2000&q=80
+children1: https://images.unsplash.com/photo-1509099836639-18ba2b5e8d8f?auto=format&fit=crop&w=1600&q=80
+education1: https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1600&q=80
+volunteer1: https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1600&q=80
+food1: https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80
+```
+
+---
+
+## src/layouts/PageLayout.astro
+
+```astro
+---
+const { metadata } = Astro.props;
+const logo = 'https://scontent-jnb2-1.xx.fbcdn.net/v/t39.30808-1/307863850_462160455950552_236630648993226268_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=PGItqvY_k44Q7kNvwHXALmA&_nc_oc=Adk3-3Z4be-JYKE7TSirSL0nbcJZQE3_GAQeQiNd5tadvBusvXdL6jyPj9EWo2vRc-s&_nc_zt=24&_nc_ht=scontent-jnb2-1.xx&_nc_gid=5n-lUaRiazTHkTLMazds_w&oh=00_AfZolRRxBqZPAoBb3MmNv_D9uVkuMydsVjvCH0-9dVaGLg&oe=68C1A665';
+const title = metadata?.title ?? 'Centre Fanovozantsoa';
+const description = metadata?.description ?? 'Centre Fanovozantsoa, Majunga. Le centre d\'hébergement qui aide les enfants des rues.';
+---
+<!doctype html>
+<html lang="fr" class="antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={logo} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={logo} />
+    <link rel="icon" href={logo} />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}</style>
+  </head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <header class="bg-white dark:bg-gray-800 shadow-sm">
+      <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src={logo} alt="Logo Centre Fanovozantsoa" class="w-12 h-12 rounded-full object-cover" />
+          <div>
+            <a href="/" class="text-lg font-bold">Centre Fanovozantsoa</a>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Mahajanga, Madagascar</p>
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="/" class="hover:underline">Accueil</a>
+          <a href="/about" class="hover:underline">À propos</a>
+          <a href="/don" class="hover:underline">Faire un don</a>
+          <a href="/contact" class="hover:underline">Contact</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a href="/don" class="inline-block px-4 py-2 bg-primary text-white rounded-lg text-sm">Faire un don</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="min-h-[60vh]">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-900 text-gray-200 py-12">
+      <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="font-bold mb-2">Centre Fanovozantsoa</h3>
+          <p>"Villa Harifetra" lot 0107F, Majunga, Madagascar</p>
+          <p>Téléphone : 034 08 586 44</p>
+        </div>
+        <div>
+          <h3 class="font-bold mb-2">Partenaires</h3>
+          <ul>
+            <li>Prométhée Humanitaire</li>
+            <li>Micadascar</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold mb-2">Mentions légales</h3>
+          <p>© {new Date().getFullYear()} Centre Fanovozantsoa. Tous droits réservés.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+```
+
+---
+
+## src/components/widgets/Hero.astro
+
+```astro
+---
+const { image = {}, actions = [] } = Astro.props;
+---
+<section class="bg-white dark:bg-gray-800 py-16">
+  <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Centre Fanovozantsoa – Un foyer pour les enfants des rues de Madagascar</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">À Mahajanga, nous offrons à 25 enfants un toit, une éducation et l’espoir d’un avenir meilleur.</p>
+      <div class="flex gap-3 flex-wrap">
+        {actions.map(action => (
+          <a href={action.href} class="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm shadow-sm" class:list={[action.variant === 'primary' ? 'bg-primary text-white' : 'bg-white border']}>
+            {action.icon ? <span class="material-icons">favorite</span> : null}
+            {action.text}
+          </a>
+        ))}
+      </div>
+      <div class="mt-6 text-sm text-gray-500">Villa Harifetra, Majunga · Tel: 034 08 586 44</div>
+    </div>
+    <div>
+      <img src={image.src} alt={image.alt} class="w-full rounded-lg shadow-lg object-cover max-h-96" />
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## src/components/widgets/Features.astro
+
+```astro
+---
+const { items = [], tagline, title, subtitle } = Astro.props;
+---
+<section class="py-16 bg-gray-50 dark:bg-gray-900">
+  <div class="container mx-auto px-6 text-center max-w-6xl">
+    <p class="text-sm uppercase text-primary font-semibold">{tagline}</p>
+    <h2 class="text-3xl font-bold mt-2 mb-4">{title}</h2>
+    <p class="text-gray-600 dark:text-gray-300 mb-8">{subtitle}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {items.map(item => (
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm text-left">
+          <div class="text-3xl mb-3">{item.icon}</div>
+          <h3 class="font-semibold mb-2">{item.title}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## src/components/widgets/Stats.astro
+
+```astro
+---
+const { stats = [] } = Astro.props;
+---
+<section class="py-12 bg-white dark:bg-gray-800">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      {stats.map(s => (
+        <div class="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg">
+          <div class="text-4xl font-extrabold">{s.amount}</div>
+          <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">{s.title}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## src/components/widgets/CallToAction.astro
+
+```astro
+---
+const { actions = [] } = Astro.props;
+---
+<section class="py-16 bg-gradient-to-r from-primary to-accent text-white">
+  <div class="container mx-auto px-6 text-center max-w-4xl">
+    <h2 class="text-3xl font-bold mb-4">Nos efforts portent leurs fruits, mais nous avons besoin de vous</h2>
+    <p class="mb-6">Chaque contribution aide à nourrir, scolariser et protéger un enfant.</p>
+    <div class="flex justify-center gap-4">
+      {actions.map(a => (
+        <a href={a.href} class="px-5 py-3 rounded-md font-semibold bg-white text-primary">{a.text}</a>
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## src/pages/index.astro
+
+```astro
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Hero from '../components/widgets/Hero.astro';
+import Features from '../components/widgets/Features.astro';
+import Stats from '../components/widgets/Stats.astro';
+import CallToAction from '../components/widgets/CallToAction.astro';
+
+const meta = {
+  title: 'Centre Fanovozantsoa – Un foyer pour les enfants des rues de Madagascar',
+  description: "Centre Fanovozantsoa, Majunga. Le centre d'hébergement qui aide les enfants des rues de Madagascar."
+};
+---
+
+<PageLayout metadata={meta}>
+  <Hero
+    actions={[
+      {variant: 'primary', text: 'Je fais un don', href: '/don', icon: 'tabler:heart'},
+      {text: 'Nous soutenir', href: '/don', icon: 'tabler:users'}
+    ]}
+    image={{ src: 'https://images.unsplash.com/photo-1608889175123-8af42c1eaf6b?auto=format&fit=crop&w=2000&q=80', alt: 'Enfants heureux à Madagascar' }}
+  />
+
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-6 text-center max-w-3xl">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">À propos du centre</h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">Créé en 2007 par Prométhée Humanitaire, le Centre Fanovozantsoa accueille durablement des enfants des rues, filles et garçons de 2 à 20 ans. Encadrés par une équipe dévouée, ils trouvent un foyer, de la nourriture, et la chance de suivre une scolarisation régulière.</p>
+    </div>
+  </section>
+
+  <Features
+    id="actions"
+    tagline="Nos actions"
+    title="Ce que nous faisons au quotidien"
+    subtitle="Chaque jour, nous œuvrons pour améliorer la vie des enfants accueillis."
+    items={[
+      {title: '🎓 Éducation', description: 'Suivi scolaire et accès à l’université pour les plus grands.', icon: '📚'},
+      {title: '🍲 Alimentation', description: 'Repas équilibrés assurés chaque jour.', icon: '🍲'},
+      {title: '🏠 Accueil et protection', description: 'Un foyer stable et sécurisé.', icon: '🏠'},
+      {title: '❤️ Épanouissement', description: 'Jeux, moments de partage, accompagnement psychologique.', icon: '😊'}
+    ]}
+  />
+
+  <Stats stats={[
+    {title: 'Enfants accueillis chaque année', amount: '25'},
+    {title: 'Enfants scolarisés', amount: '100%'},
+    {title: 'Jeunes à l’université', amount: '3'},
+    {title: 'Années d’action', amount: '15'}
+  ]} />
+
+  <section class="py-16 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto px-6 text-center max-w-3xl">
+      <blockquote class="text-xl italic text-gray-700 dark:text-gray-300">“Grâce au Centre Fanovozantsoa, je ne dors plus dans la rue. J’ai repris l’école et j’espère devenir enseignant.”</blockquote>
+      <p class="mt-4 text-gray-600 dark:text-gray-400">– Témoignage d’un jeune accueilli</p>
+    </div>
+  </section>
+
+  <CallToAction actions={[{variant:'primary', text:'Faire un don', href:'/don'}, {text:'Parrainer un enfant', href:'/don'}]} />
+
+</PageLayout>
+```
+
+---
+
+## src/pages/about.astro
+
+```astro
+---
+import PageLayout from '../layouts/PageLayout.astro';
+const meta = { title: 'À propos - Centre Fanovozantsoa', description: 'Histoire et mission du Centre Fanovozantsoa à Mahajanga.' };
+---
+
+<PageLayout metadata={meta}>
+  <section class="py-16">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <h1 class="text-3xl font-bold mb-4">À propos</h1>
+      <p class="mb-4">Prométhée Humanitaire a créé en février 2007 le centre Fanovozantsoa, qui accueille aujourd’hui vingt-cinq enfants, garçons et filles de 2 à 20 ans, de façon durable.</p>
+      <p class="mb-4">Le centre dispose d’une équipe composée d’un directeur, d’une directrice administrative, de 4 éducateurs, d’une ménagère et d’une cuisinière. Les enfants peuvent ainsi se nourrir, se loger, grandir dans un foyer stable et suivre une scolarisation régulière.</p>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-4">Origine du projet</h2>
+      <p class="mb-4">Tout commence lors d'un voyage à Madagascar en décembre 2018. Après avoir aidé une famille locale, Micadascar s'est créé pour soutenir l'orphelinat et organiser un événement annuel pour financer les activités du centre.</p>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-4">Nos objectifs</h2>
+      <ul class="list-disc ml-6 mb-4">
+        <li>Offrir un foyer sécurisé aux enfants des rues</li>
+        <li>Assurer la scolarisation et la formation professionnelle</li>
+        <li>Accompagner l'épanouissement social et émotionnel</li>
+      </ul>
+
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1600&q=80" alt="Enfants jouant" class="mt-6 rounded-lg shadow-lg" />
+
+    </div>
+  </section>
+</PageLayout>
+```
+
+---
+
+## src/pages/contact.astro
+
+```astro
+---
+import PageLayout from '../layouts/PageLayout.astro';
+const meta = { title: 'Contact - Centre Fanovozantsoa' };
+---
+
+<PageLayout metadata={meta}>
+  <section class="py-16">
+    <div class="container mx-auto px-6 max-w-2xl">
+      <h1 class="text-3xl font-bold mb-4">Contactez-nous</h1>
+      <p class="mb-6">Pour toute question ou pour proposer votre aide, contactez-nous :</p>
+      <form class="grid gap-4">
+        <input type="text" name="name" placeholder="Votre nom" class="p-3 rounded-lg border" />
+        <input type="email" name="email" placeholder="Votre email" class="p-3 rounded-lg border" />
+        <textarea name="message" rows="6" placeholder="Votre message" class="p-3 rounded-lg border"></textarea>
+        <button class="px-4 py-3 bg-primary text-white rounded-lg">Envoyer</button>
+      </form>
+
+      <div class="mt-8">
+        <h3 class="font-semibold">Coordonnées</h3>
+        <p>"Villa Harifetra" lot 0107F, Majunga, Madagascar</p>
+        <p>Téléphone : 034 08 586 44</p>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+```
+
+---
+
+## src/pages/don.astro
+
+```astro
+---
+import PageLayout from '../layouts/PageLayout.astro';
+const meta = { title: 'Faire un don - Centre Fanovozantsoa' };
+---
+
+<PageLayout metadata={meta}>
+  <section class="py-16">
+    <div class="container mx-auto px-6 max-w-3xl text-center">
+      <h1 class="text-3xl font-bold mb-4">Faire un don</h1>
+      <p class="mb-6">Votre générosité permet de nourrir, éduquer et protéger les enfants. Chaque contribution compte.</p>
+
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div class="p-6 bg-white rounded-lg shadow">
+          <div class="text-2xl font-bold">10€</div>
+          <p class="text-sm mt-2">Un repas pour un enfant</p>
+          <button class="mt-4 px-4 py-2 bg-primary text-white rounded">Donner</button>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow">
+          <div class="text-2xl font-bold">25€</div>
+          <p class="text-sm mt-2">Fournitures scolaires</p>
+          <button class="mt-4 px-4 py-2 bg-primary text-white rounded">Donner</button>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow">
+          <div class="text-2xl font-bold">50€</div>
+          <p class="text-sm mt-2">Soutien mensuel</p>
+          <button class="mt-4 px-4 py-2 bg-primary text-white rounded">Donner</button>
+        </div>
+      </div>
+
+      <p class="text-sm text-gray-500 mt-6">Intégration Stripe Checkout à ajouter côté serveur (Vercel/Functions). Voir README pour la configuration.</p>
+
+    </div>
+  </section>
+</PageLayout>
+```
+
+---
+
+## src/pages/login.astro
+
+```astro
+---
+import PageLayout from '../layouts/PageLayout.astro';
+const meta = { title: 'Connexion - Centre Fanovozantsoa' };
+---
+
+<PageLayout metadata={meta}>
+  <section class="py-16">
+    <div class="container mx-auto px-6 max-w-md">
+      <h1 class="text-2xl font-bold mb-4">Connexion</h1>
+      <p class="mb-6">Se connecter avec votre email (Supabase ou autre). Ce formulaire appelle la fonction d'auth côté client.</p>
+      <form class="grid gap-4">
+        <input type="email" name="email" placeholder="Email" class="p-3 rounded-lg border" />
+        <input type="password" name="password" placeholder="Mot de passe" class="p-3 rounded-lg border" />
+        <button class="px-4 py-3 bg-primary text-white rounded">Se connecter</button>
+      </form>
+    </div>
+  </section>
+</PageLayout>
+```
+
+---
+
+## src/pages/dashboard.astro
+
+```astro
+---
+import PageLayout from '../layouts/PageLayout.astro';
+const meta = { title: 'Dashboard - Centre Fanovozantsoa' };
+---
+
+<PageLayout metadata={meta}>
+  <section class="py-16">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <h1 class="text-3xl font-bold mb-4">Tableau de bord</h1>
+      <p class="mb-6">Espace administrateur: aperçu rapide des enfants, dons récents et actions à faire.</p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-4 bg-white rounded shadow">Enfants : <strong>25</strong></div>
+        <div class="p-4 bg-white rounded shadow">Dons récents : <strong>12</strong></div>
+        <div class="p-4 bg-white rounded shadow">Bénévoles : <strong>8</strong></div>
+      </div>
+
+      <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=1600&q=80" alt="Bénévoles" class="mt-6 rounded" />
+
+    </div>
+  </section>
+</PageLayout>
+```
+
+---
+
+## .github/workflows/deploy.yml
+
+```yaml
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+---
+
+## vercel.json
+
+```json
+{
+  "version": 2
+}
+```
+
+---
+
+## README.md (extrait)
+
+```md
+# Centre Fanovozantsoa
+
+Site Astro + Tailwind pour l'association Centre Fanovozantsoa.
+
+## Installation
+
+1. `npm install`
+2. `npm run dev`
+
+## Déploiement
+- Sur GitHub Pages: push sur `main` (workflow automatique)
+- Sur Vercel: connecte le repo et déploie
+
+## Auth & Paiements
+- Pour l'authentification, configure Supabase et ajoute la clé dans les variables d'environnement.
+- Pour Stripe, crée les endpoints serverless (Vercel Functions) pour créer une session Checkout.
+```
+
+---
+
+## Notes finales
+
+- J'ai inclus beaucoup d'images publiques (Unsplash) et le logo fourni pour illustrer le site.
+- Les pages `login`, `dashboard` et `don` sont des squelettes : il faut ajouter la logique Supabase/Stripe côté client/serveur (fonctions serverless) selon ton choix d'hébergement.
+- Roo Code peut prendre ces fichiers et générer la logique manquante (API routes, intégration Stripe, Supabase) via des prompts. Si tu veux, je peux générer aussi les prompts détaillés pour chaque intégration (Supabase, Stripe, GitHub Actions secrets).
+
+
+---
+
+*Fin du projet.*
